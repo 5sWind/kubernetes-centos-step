@@ -34,12 +34,14 @@ modprobe nf_conntrack_ipv4
 
 vim /etc/security/limits.conf
 >
+```
 * soft nofile 65536
 * hard nofile 65536
 * soft nproc 65536
 * hard nproc 65536
 * soft memlock unlimited
 * hard memlock unlimited
+```
 
 ## 关闭swap
 ```bash
@@ -58,7 +60,8 @@ sudo systemctl start docker
 ```
 
 vim /etc/docker/daemon.json
-> 
+>
+```
 {
   "exec-opts": ["native.cgroupdriver=systemd"],
   "registry-mirrors": [
@@ -66,6 +69,7 @@ vim /etc/docker/daemon.json
     "https://mirror.baidubce.com"
   ]
 }
+```
 
 ```bash
 mkdir -p /etc/systemd/system/docker.service.d
@@ -84,6 +88,7 @@ lsmod | grep ^ip_vs | awk '{print $1}' | xargs -I {} modprobe {}
 vim /etc/yum.repos.d/kubernetes.repo
 
 >
+```
 [kubernetes]
 name=Kubernetes
 baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64/
@@ -91,6 +96,7 @@ enabled=1
 gpgcheck=1
 repo_gpgcheck=1
 gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
+```
 
 ```bash
 sudo setenforce 0
@@ -164,6 +170,7 @@ http://192.168.0.108:8001/api/v1/namespaces/kubernetes-dashboard/services/https:
 vim dashboard-admin.yaml
 
 >
+```
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
 metadata:
@@ -178,6 +185,7 @@ subjects:
 - kind: ServiceAccount
   name: kubernetes-dashboard
   namespace: kube-system
+```
 
 ```bash
 kubectl apply -f dashboard-admin.yaml 
